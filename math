@@ -1,0 +1,19 @@
+gravity = .3 or .5
+velocity = 
+  4,
+  4,     [10-4]
+  3+6*g, [3-9]
+  8,
+  6,
+  9+
+jump v = -10
+
+4, .3 and 
+8, .5
+are the potential limitting ranges
+
+longest distance with no y change is
+time of symmetric arc * velocity
+
+(time = -10/.3) * (V = 4) = 133
+(time = -10/.5) * (V = 8) = 160

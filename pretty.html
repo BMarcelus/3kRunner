@@ -3,23 +3,24 @@
 //Copyright Brian Dizon 2018
 try{A=webkitAudioContext}catch(e){A=AudioContext}A=new A();
 P=(f)=>{
-  o=A.createOscillator();
-  m=A.currentTime;o.start();
-  o.stop(m+.07);
-  o.type="square";
-  o.frequency.setValueAtTime(f,m+.01);
+  i=A.createOscillator();
+  m=A.currentTime;i.start();
+  i.stop(m+.07);
+  i.type="square";
+  i.frequency.setValueAtTime(f,m+.01);
   f=A.createGain();
   f.connect(A.destination);
-  f.gain.value=.03;o.connect(f);
+  f.gain.value=.03;i.connect(f);
 };
 c=document.querySelector('canvas').getContext('2d');
 c.font="20px Arial";
 I=X=200;
 Y=J=M=100;
-L=$=v=k=t=f=S=V=h=x=G=F=N=D=Z=0;
-T=g=Q=1;
+o=L=$=v=k=t=f=S=V=h=x=G=F=N=D=Z=0;
+g=Q=1;
 p=[];
 r=Math.random;y=300;B="#eef";W='#000';E=.7;
+n=880;
 e=[];
 //set the color of the canvas
 C=L=>{c.fillStyle=L};
@@ -30,7 +31,7 @@ q=(i,j,w,H,e)=>{
   C(B);
   //game is running and colliding with player and not a +score
   w-2&&t&&i+w>=X&&i<X+30&&j+H>=Y+h&&j<=Y+30&&(
-    w-20?
+    w-25?
     //not a heart
       v>=0&&Y<=j?
       //landing on it
@@ -39,13 +40,13 @@ q=(i,j,w,H,e)=>{
           Y=j-29,
           Z-5||(e[1]+=v,Y+=v),
           //set grounded
-          //if boing, boing
+          //if boing, boing bounce
           H-27?
             v=g=0:
-            P(Y,v=Z-3?-12:-15,k=0,e[1]+=9),
+            P(n,v=Z-3?-12:-15,e[1]+=9,g=1),
           //make thumper lower
           //speed boost
-          H-18||P(V=15)
+          H-18||P(X*F,V=15)
         ):
       //running into it
       //is wall
@@ -56,11 +57,11 @@ q=(i,j,w,H,e)=>{
     //heart
       (
         //add to score
-        f+=30+10*Z,
+        f+=10,
         //transform into +score
         e[2]=2,
         //play a note
-        P(880+440*(1-E)),
+        P(n+440*(1-E)),
         //prepare to play note in 3 frames
         G=F+3,
         //increase probability of heart
@@ -68,17 +69,32 @@ q=(i,j,w,H,e)=>{
       );
   //draws
   w-2?
-    w-20?
+    w-25?
   // platform
       c.R(i,j,w,H,w-50||Z-2||C('#a0a')):
   // heart
       c.T('<3',i,j+20,C(R)):
   // +score
-    (c.T('+'+(30+10*Z),i,j,C(R)),e[1]-=1,e[0]+=V/2);
+    (c.T('+10',i,j,C(R)),e[1]-=1,e[0]+=V/2);
   //boost
   H-18||c.T('>>>>>>>>',i,j);
   H-27||c.R(i-4,j,w+8,H/2)
 };
+/*
+ui
+In game
+Best:, *Distance*, *+<3*
+
+Death
+continue
+distsance, <3 collected
+total
+
+total
+**last distance **
+best
+
+*/
 s=j=>{
   // Z=1
   // do the Frame count, cycle characters if held after death screen animation
@@ -90,13 +106,13 @@ s=j=>{
   c.R(0,0,1e3,450);
   //HUD
   C(B);
-  c.T('tap:FALL hold:CROUCH release:JUMP',200,20);
-  c.R(20,70,660,2),
-  c.R(20,52,L/3e4*660,20),
-  c.R(20,81,($+f)/I*160,20),
-  c.R(20,99,160,2),
-  c.T(f,M,50);
-  c.T($+f,M,20);
+  c.T('tap:AIRSTOMP hold:CROUCH release:JUMP',X,20);
+
+  c.R(20,420,660,2),
+  c.R(20,420,L/48e3*660,20),
+  // c.R(M,81,($+f)/I*160,20),
+  // c.R(M,99,160,2),
+  // c.T($+f,M,20);
   // player is not grounded if v > 5
   g=g||v>5;
   //apply gravity
@@ -117,7 +133,8 @@ s=j=>{
   // make thumper thump
   V=Z-5||!m?V:0;
   // Jeff
-  z=Z-4?V:V+v/2;
+  z=V;
+  // z=Z-4?V:V+v/2;
   // z=V-(k||Z-4?0:-vy);
   L+=z*t;
   // run the platforms
@@ -131,41 +148,49 @@ s=j=>{
   l=a=>{
     p.push(a);
     //add a heart above the platform with probability (1-E-.1)
-    r()>E+.1&&p.push([x+r()*79,y-15-r()*120,20,30]);
+    //r()>E+.1&&p.push([x+r()*79,y-15-r()*120,20,30]);
+    r()>.1+E&&l([x+r()*79,y-15-r()*120,25,30]);
   };
   // Z=3;
   // j=e=>Math.random()>.5?0:1;
   // j=e=>y>250?1:0;
   // j=r;
-  //create a regular platform or boost platform
+  // create a regular platform or boost platform
   u=d=>{
     d-2?0:y+=M*r();
     y=y<150?150:y>400?400:y;
     l([x+=M,y,M,9+d*9,d-1?0:x+=M,d-2?0:y-=M*r()])
   };
 // if the last spawned platform is now in view
-  x<1e3&&(e=r()>.5?0:Math.floor(r()*L/1e4)%3,
+  x<1e3&&(
+    r()*L<5e3?o=0:0,
+    r()*L>5e3?o=r()*3<<0:0,
     !t||r()<.1?
       //spawn three in a row
-      (u(0),u(L>2e3?L>4e3?2:1:0)):
+      (u(0),u(L>2e3?L>4e3&&r()>.5?2:1:0)):
       r()<.1&&L>1e3?
       //spawn wall
-        (l([x+=200,y-=120,50,M],1),l([x-M,y+=120,250,10]),x+=50,u(0)):
+        (l([x+=X,y-=120,50,M],1),l([x-M,y+=120,250,10]),x+=50,u(0)):
       // randomly modify platform height
       // bound platform height to [150,400]
         y+=(.5-r())*190,
     //spawn regular platform at random x distance
-    u(e,x+=r()*186)
+    u(o,x+=r()*186)
   );
 //set color based on character
   C(R=["#d26","#2a7","#f2f",'#0af',"#62d","#666"][Z]);
+  c.T(f,M,50);
+  c.R(20,20,660,2),
+  c.R(20,20,($+f)/I*660,20),
+  c.R(0,0,n*(.7-E),3);
+  N&&$+f<30?c.T('*New Char Unlocked!',M,M):0;
 //set hat/hair based on character
-  c.T(['M','▮▮','oöo','=>>','>FF','[█]'][Z],X-3-v/4,Y+10+h);
+  c.T(['M',' " "','oöo','=>>','>FF','[█]'][Z],X-3-v/4,Y+10+h);
 //draw character
   c.R(X-v/4,Y+h,30+Z+v/2,30-h);
 //draw jump puffs
 //2-10 frames after jumping
-  F<10&&F>2&&c.T(`Ɛ>${' '.repeat(F-2)}<3`,X+15-F*V,J);
+  F<10&&F>2&&c.T(`Ɛ>${' '.repeat(F-2)}<3`,X-F*V,J);
 //draw crown if this character has won
   e[Z]&&c.T(' ♕',X,Y+m*14,C('#db0'));
 //remove the oldest platform if it is off screen
@@ -181,28 +206,38 @@ s=j=>{
   Y<0?Y=0:0;
   // Y<0&&(Y=0,Z-4||K());
 // display death screen
+  l=L>>4;
   D?
     (m=260+999/F,C(B),c.R(m-25,45,230,250),C(W),c.R(m-20,50,220,240),C(B),
-    c.T(`<3's: ${f}!`,m,90),
-    F>40&&c.T(`Best: ${S=f>S?f:S}`,m,120),
-    c.R(m,258,160,2),
-    c.R(m,240,f/I*160,20),
-    c.T(Q-6?'new char at '+I:e[Z]?'YAY u win':'final goal 3k',m,280),
-    N&&F%25>10&&c.T('*New Char Unlocked!',m,150),
-    Q-1&&c.T('hold to change char',m,200),
-    F%7||F>10&&F<44&&((e[Z]||N)?P(880+F*F):P(880-F*F))):
+      d?(
+        c.T(`Best: ${S=l>S?l:S}m`,m,M),
+        c.T(`${l}m`,m,150),
+        c.T(`${f} <3s`,m+M,150)
+      ):(N?
+      F%25>10&&c.T('*New Char Unlocked!',m,M):(
+        c.T(`total: ${$+f} <3s`,m,80),
+        c.R(m,X,160,2),
+        c.R(m,X,(f+$)/I*160,20),
+        c.T(Q-6?`new char: ${I} <3s`:e[Z]?'YAY u win':'final goal 3k',m,170)
+      ),
+      Q-1&&c.T('hold to change char',m,270)
+      ),
+    
+    F%7||F>10&&F<44&&P(l>3e3||N?n+F*F:n-F*F)):
 //if alive and score > 3000, set this character to win
-  f<3e3?0:e[Z]=1;
+  l<3e3?0:e[Z]=1;
 // play the delayed <3 pickup sound
   F==G&&(P(1200),G=0);
 // if money exceeds current goal, pay money to unlock character
 // and set new goal
-  $+f<I||Q>5?0:(Z=N=Q++,$-=I,K(),I*=2);
-  T&&window.requestAnimationFrame(s);
+  // $+f<I||Q>5?0:(Z=N=Q++,$-=I,K(),I*=2);
+  $+f<I||Q>5?0:(N=Q++,$-=I,I*=2);
+  // $+f<I||K($-=I,I*=2,Q<6?Z=N=Q++:N=1);
+  window.requestAnimationFrame(s);
 };
 //kill player
 K=e=>{
-  V=t=v=F=0,g=D=1,P(220);
+  V=t=v=F=0,d=g=D=1,P(220);
 };
 a=e=>{
   e.metaKey||e.preventDefault();
@@ -214,16 +249,17 @@ a=e=>{
       //if dead, reset counter to do character cycle
       F<50||(F=60):
       //otherwise, crouch
-      P(550-Y,F=t=k=1,v=10);
+      P(550-Y,F=t=k=1,g?v=10:0);
   k=1;
 };
 b=e=>{
   D?
     //if dead, if after death screen animation, start the game
-    F<50||(N||($+=f,L=f=0),N=D=0,Y=M,E=.7):
+    d*F>50?(N?Z=Q-1:0,d--):
+    F<50||F>M||($+=f,f=L=N=D=0,Y=M,E=.7):
     k?g?
     // in the air
-      v=10*t:
+      Z-2?0:v=10:
     // on the ground
       (
         //set puff location
@@ -237,7 +273,7 @@ b=e=>{
         //set airborn and frame counter
         g=F=1,
         //play tone based on height
-        P(880-Y)
+        P(n-Y)
       ):0;
 k=0;
 };

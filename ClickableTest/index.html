@@ -1,0 +1,50 @@
+<style>*{margin:0}</style>
+<canvas>
+    <script>
+    c=document.querySelector('canvas');
+    w=window;
+    c.width=W=w.innerWidth;
+    c.height=H=w.innerHeight;
+    c=c.getContext('2d');
+    w=w.addEventListener.bind(w);
+    f=k=x=y=0;l=10;
+    B="#000";C=B;
+    c.lineCap='round';
+    a=e=>{
+      e.preventDefault();
+      t=e.touches;
+      x=e.clientX||t[0].pageX;
+      y=e.clientY||t[0].pageY;
+    };
+    d=e=>{
+      e&&a(e);
+      e&&(f=x<H/10&&y<H/10)&&(C=y>H/2?"#fff":B);
+      c.beginPath();
+      c.moveTo(x,y);
+      k=1;
+    };
+    u=e=>{
+      m(e);
+      k=0;
+    };
+    m=e=>{
+      a(e);
+      c.fillStyle='#000';
+      f&k&&(
+        C=`hsl(${y/H*400<<0},${100-x/W*100<<0}%,${y>H*.9?(y/H-.9)*1e3<<0:50}%`,
+        x=H/20,y=H/20,d(),y+=1,
+        c.strokeStyle=C,
+        c.fillStyle=C
+      );
+      c.fillRect(0,0,H/10,H/10);
+      k&&c.lineTo(x,y);
+      c.lineWidth=l;
+      c.stroke();
+    };
+    w('touchstart', d);
+    w('mousedown', d);
+    w('mousemove', m);
+    w('touchmove', m,{passive:false});
+    w('touchup', u);
+    w('mouseup', u);
+  </script>
