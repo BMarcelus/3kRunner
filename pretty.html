@@ -38,19 +38,19 @@ q=(i,j,w,H,e)=>{
         (
           //put character on platform
           Y=j-29,
-          Z-5||(e[1]+=v,Y+=v),
+          Z-4||(e[1]+=v,Y+=v),
           //set grounded
           //if boing, boing bounce
           H-27?
             v=g=0:
-            P(n,v=Z-3?-12:-15,e[1]+=9,g=1),
+            P(n,v=Z-5?-12:-15,e[1]+=9,g=1),
           //make thumper lower
           //speed boost
           H-18||P(X*F,V=15)
         ):
       //running into it
       //is wall
-        w-50||(Z-2?
+        w-50||(Z-3?
           K():
           // make pinky bounce
           P(V-=9,e[1]-=4)):
@@ -71,7 +71,7 @@ q=(i,j,w,H,e)=>{
   w-2?
     w-25?
   // platform
-      c.R(i,j,w,H,w-50||Z-2||C('#a0a')):
+      c.R(i,j,w,H,w-50||Z-3||C('#a0a')):
   // heart
       c.T('<3',i,j+20,C(R)):
   // +score
@@ -116,11 +116,11 @@ s=j=>{
   // player is not grounded if v > 5
   g=g||v>5;
   //apply gravity
-  v+=Z-3?.3:.5;
-  Z-4?0:v+=Math.cos(F/4)*g/2;
+  v+=Z-5?.3:.5;
+  Z-1?0:v+=Math.cos(F/4)*g/2;
   // make pinky float
-  v=Z*k*g-2||v<0?v:1;
-  // Z-4?0:v=4-8*k
+  v=Z*k*g-3||v<0?v:1;
+  // Z-1?0:v=4-8*k
   // apply y velocity if game is running
   t?0:v=0;
   Y+=v;
@@ -129,13 +129,13 @@ s=j=>{
   // set character height
   h+=m*7-h/2;
   // lerp character x velocity depending on character
-  V+=!D*([4,4,3+6*g,8,6,9+f/3e3*9][Z]-V)/20;
+  V+=!D*([4,6+!g*4,4,3+6*g,18,8][Z]-V)/20;
   // make thumper thump
-  V=Z-5||!m?V:0;
+  V=Z-4||!m?V:0;
   // Jeff
   z=V;
-  // z=Z-4?V:V+v/2;
-  // z=V-(k||Z-4?0:-vy);
+  // z=Z-1?V:V+v/2;
+  // z=V-(k||Z-1?0:-vy);
   L+=z*t;
   // run the platforms
   x-=z;
@@ -178,33 +178,33 @@ s=j=>{
     u(o,x+=r()*186)
   );
 //set color based on character
-  C(R=["#d26","#2a7","#f2f",'#0af',"#62d","#666"][Z]);
+  C(R=["#d26","#62d","#2a7","#f2f","#666",'#0af'][Z]);
   c.T(f,M,50);
   c.R(20,20,660,2),
   c.R(20,20,($+f)/I*660,20),
   c.R(0,0,n*(.7-E),3);
   N&&$+f<30?c.T('*New Char Unlocked!',M,M):0;
 //set hat/hair based on character
-  c.T(['M',' " "','oöo','=>>','>FF','[█]'][Z],X-3-v/4,Y+10+h);
+  c.T(['M','>FF',' " "','oöo','[█]','=>>'][Z],X-3-v/4,Y+10+h);
 //draw character
   c.R(X-v/4,Y+h,30+Z+v/2,30-h);
 //draw jump puffs
 //2-10 frames after jumping
   F<10&&F>2&&c.T(`Ɛ>${' '.repeat(F-2)}<3`,X-F*V,J);
 //draw crown if this character has won
-  e[Z]&&c.T(' ♕',X,Y+m*14,C('#db0'));
+  e[Z]&&c.T(' ♕',X,Y+sh,C('#db0'));
 //remove the oldest platform if it is off screen
   p[0][0]<-p[0][2]&&p.shift();
 //draw face
     C(W);
   //select mouth based on character
-    z="-.v wñ"[Z];
+    z="-w.vñ "[Z];
     c.T(k||D?`>${z}<`:`^${z}^`,X+5,Y+20+v+h/2);
 //kill the player if they fall off screen
   Y>450&&(Y=420,K());
 //bound player to the ceiling
   Y<0?Y=0:0;
-  // Y<0&&(Y=0,Z-4||K());
+  // Y<0&&(Y=0,Z-1||K());
 // display death screen
   l=L>>4;
   D?
@@ -259,7 +259,7 @@ b=e=>{
     F<50||F>M||($+=f,f=L=N=D=0,Y=M,E=.7):
     k?g?
     // in the air
-      Z-2?0:v=10:
+      Z-3?0:v=10:
     // on the ground
       (
         //set puff location
@@ -267,7 +267,7 @@ b=e=>{
         //jump
         v=-10,
         //make froggy zoom
-        Z-1||(V=10),
+        Z-2||(V=10),
         //add to score
         // f+=5*Q,
         //set airborn and frame counter
