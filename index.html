@@ -16,7 +16,7 @@
   c.font="20px Arial";
   I=X=200;
   Y=J=M=100;
-  o=L=$=v=k=t=f=S=V=h=x=G=F=N=D=Z=0;
+  l=o=L=$=v=k=t=f=S=V=h=x=G=F=N=D=Z=0;
   g=Q=1;
   p=[];
   r=Math.random;y=300;B="#eef";W='#000';E=.7;
@@ -43,17 +43,15 @@
             //if boing, boing bounce
             H-27?
               v=g=0:
-              P(n,v=Z-5?-12:-15,e[1]+=9,g=1),
+              P(n*2,v=Z-5?-12:-15,e[1]+=9,F=g=1,J=Y),
             //make thumper lower
             //speed boost
-            H-18||P(X*F,V=15)
+            H-18||P(15*X-i*12,V=15)
           ):
         //running into it
         //is wall
-          w-50||(Z-3?
+          w-50||
             K():
-            // make pinky bounce
-            P(V-=9,e[1]-=4)):
       //heart
         (
           //add to score
@@ -71,7 +69,7 @@
     w-2?
       w-25?
     // platform
-        c.R(i,j,w,H,w-50||Z-3||C('#a0a')):
+        c.R(i,j,w,H):
     // heart
         c.T('<3',i,j+20,C(R)):
     // +score
@@ -107,9 +105,10 @@
     //HUD
     C(B);
     c.T('tap:AIRSTOMP hold:CROUCH release:JUMP',X,20);
+    c.T(l+'m',M,20);
   
-    c.R(20,420,660,2),
-    c.R(20,420,L/48e3*660,20),
+    // c.R(20,420,660,2),
+    // c.R(20,420,L/48e3*660,20),
     // c.R(M,81,($+f)/I*160,20),
     // c.R(M,99,160,2),
     // c.T($+f,M,20);
@@ -117,7 +116,7 @@
     g=g||v>5;
     //apply gravity
     v+=Z-5?.3:.5;
-    Z-1?0:v+=Math.cos(F/4)*g/2;
+    Z-1?0:v+=Math.sin(F/4)*g/2;
     // make pinky float
     v=Z*k*g-3||v<0?v:1;
     // Z-1?0:v=4-8*k
@@ -129,7 +128,7 @@
     // set character height
     h+=m*7-h/2;
     // lerp character x velocity depending on character
-    V+=!D*([4,6+!g*4,4,3+6*g,18,8][Z]-V)/20;
+    V+=!D*([4,5,6,3+6*g,12,8][Z]-V)/20;
     // make thumper thump
     V=Z-4||!m?V:0;
     // Jeff
@@ -178,10 +177,11 @@
       u(o,x+=r()*186)
     );
   //set color based on character
+    l=L>>4;
     C(R=["#d26","#62d","#2a7","#f2f","#666",'#0af'][Z]);
     c.T(f,M,50);
-    c.R(20,20,660,2),
-    c.R(20,20,($+f)/I*660,20),
+    // c.R(20,20,660,2),
+    // c.R(20,20,($+f)/I*660,20),
     c.R(0,0,n*(.7-E),3);
     N&&$+f<30?c.T('*New Char Unlocked!',M,M):0;
   //set hat/hair based on character
@@ -206,7 +206,6 @@
     Y<0?Y=0:0;
     // Y<0&&(Y=0,Z-1||K());
   // display death screen
-    l=L>>4;
     D?
       (m=260+999/F,C(B),c.R(m-25,45,230,250),C(W),c.R(m-20,50,220,240),C(B),
         d?(
@@ -249,7 +248,7 @@
         //if dead, reset counter to do character cycle
         F<50||(F=60):
         //otherwise, crouch
-        P(550-Y,F=t=k=1,g?v=10:0);
+        P(550-Y,F=t=k=1,g?(v=10,Z-1||(V=8)):0,);
     k=1;
   };
   b=e=>{
