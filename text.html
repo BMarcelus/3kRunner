@@ -1,0 +1,123 @@
+
+<style>
+    body{
+      background: black;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      overflow: hidden;
+      /* flex-direction: column; */
+    }
+    #title{
+      font: italic 900 120px Arial;
+      text-shadow:  -4px 6px 0px #914;
+      letter-spacing: 1px;
+      margin-bottom: 0px;
+      text-align: center;
+    }
+    #all{
+      color: #d26;
+      font: italic 900 40px Arial;
+      letter-spacing: 5px;
+      display: block;
+      text-align: center;
+      margin: auto;
+      text-shadow:  -3px 4px 0px #914;
+    }
+    #asdf {
+      margin-top: 10px;
+      font: italic 900 60px Arial;
+    }
+    canvas {
+      position: absolute;
+    }
+    @keyframes slidein {
+      from {
+        transform: translate(200%);
+      }
+
+      to {
+        transform: translate(0%);        
+      }
+    }
+  </style>
+  
+<div id="all">
+  <h1 id="title">3k Runners</h1>
+<p>A Game By Brian Dizon</p><p id="asdf">Made in 3kb</p>
+  </div>
+<canvas></canvas>
+<script>
+var CE = document.querySelector('canvas');
+var c=CE.getContext('2d');
+CE.width = window.innerWidth;
+CE.height= window.innerHeight;
+// c.font='20px Arial';
+c.font="800 20px Arial";
+var frame = 0;
+try{A=webkitAudioContext}catch(e){A=AudioContext}A=new A();
+  P=(f,i,j)=>{
+    i=A.createOscillator();
+    j=A.currentTime;i.start();
+    i.stop(j+.1);
+    i.type="sawtooth";
+    i.frequency.setValueAtTime(f,j);
+    f=A.createGain();
+    f.connect(A.destination);
+    f.gain.value=.03;i.connect(f);
+  };
+function drawChar(Z) {
+  c.save();
+  var a = Z*Math.PI/6*2 + frame*frame*Math.PI/90000;
+  var x = 200;
+  var y = CE.height/2;
+  c.translate(x,y);
+  c.scale(6,6);
+  c.translate(0,-15);
+    C=e=>{c.fillStyle=e};
+    H=c.fillText.bind(c);
+    cR=c.fillRect.bind(c);
+    X=0;
+    Y=0;
+    M=100;
+    v=0;
+    V=5;
+    h=0;
+    W="#000";
+    C(R=["#d26","#73e","#2a7","#f2f","#dbc",'#0af'][Z]);
+    // H(['Mindi', 'Geff', 'Frogi', 'Floati', 'Stompi', 'Speedi'][Z],-10,50);
+  //set hat/hair based on character
+    H(['M','>FF',' " "','oöo','[█]','=>>'][Z],X-3-v/4,Y+10+h);
+  //draw character
+    cR(X-v/4,Y+h,32+Z+v/2,30-h);
+
+  //draw face
+      C(W);
+    //select mouth based on character
+      m="-w.vñ "[Z];
+      H(`^${m}^`,X+V/2,Y+20+v+h/2);
+  c.restore();
+}
+var F = 0;
+// setInterval(() => {
+//   F++;
+//   // if(F%100<80&&(F%15==0||F%45==10))P(880-((F*F)%7)*100);
+//   if(F%20==0)P(100+(Math.floor(F/360/4)%3)*20);
+//   if(F%20==10)P(150+(Math.floor(F/360)%4)*30);
+//   if(F%40==0)P(100);
+//   if(F%120==0){P(50);P(600);}
+//   if(F%80<3)P(300);
+
+
+//   if(F%20==5)P(400+(Math.floor(F/360/2)%2)*20);
+//   if(F%40==15)P(440-(Math.floor(F/360/4)%3)*60);
+//   if(F%40==25)P(400+(Math.floor(F/360)%2)*60);
+
+//   // if(F%10==0)P(880+(F%7)*20+(Math.floor(F/300)%4)*30);
+
+//   // if(F%10==0)P(880+(F%7)*20+(Math.floor(F/300)%4)*30);
+//   // if(F%30==5)P(880+(Math.floor(F/300)%2)*100);
+//   // if(F%35<5)P(880-(F*F%7)*20);
+//   // if(F%15==0)P(400);
+// }, 15)
+</script>

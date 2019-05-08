@@ -1,4 +1,5 @@
 <style>*{height:100%;margin:0;}</style>
+<meta charset="UTF-8">
 <canvas width=780 height=450>
   <script>
   //Copyright Brian Dizon 2018
@@ -13,25 +14,29 @@
     f.connect(A.destination);
     f.gain.value=.03;i.connect(f);
   };
-  c=document.querySelector('canvas').getContext('2d');
+  ca=document.querySelector('canvas');
+  c=ca.getContext('2d');
   c.font="800 20px Arial";
-  I=X=200;
+  F=I=X=200;
   Y=J=M=100;
-  d=l=o=L=v=k=t=f=S=V=h=x=G=F=N=Z=0;
+  D=d=l=o=L=v=k=t=f=S=V=h=x=G=N=Z=0;
   z=localStorage;
-  D=g=Q=1;
+  g=Q=1;
   p=[];
-  r=Math.random;y=300;B="#eef";W='#000';E=.7;
+  r=Math.random;y=300;B="#eef";W='#000';E=.4;
   n=880;
   //set the color of the canvas
   C=L=>{c.fillStyle=L};
-  cT=c.fillText.bind(c);
+  H=c.fillText.bind(c);
   cR=c.fillRect.bind(c);
   //process platforms
-  q=(i,j,w,H,e)=>{
+  $=z.getItem("$")-0;
+  console.log($);
+  // $=0;
+  q=(i,j,w,m,e)=>{
     C(B);
     //game is running and colliding with player and not a +score
-    w-2&&t&&i+w>=X&&i<X+30&&j+H>=Y+h&&j<=Y+30&&(
+    w-2&&t&&i+w>=X&&i<X+30&&j+m>=Y+h&&j<=Y+30&&(
       w-25?
       //not a heart
         v>=0&&Y<=j?
@@ -43,11 +48,11 @@
             Z-4||(e[1]+=v,Y+=v),
             //set grounded
             //if boing, boing bounce
-            H-27?
+            m-27?
               v=g=0:
               P(n*2,v=Z-5?-12:-15,e[1]+=9,F=g=1,J=Y),
             //speed boost
-            H-18||P(15*X-i*12,V=15)
+            m-18||P(15*X-i*12,V=15)
           ):
         //running into it
         //is wall
@@ -70,14 +75,14 @@
     w-2?
       w-25?
     // platform
-        cR(i,j,w,H):
+        cR(i,j,w,m):
     // heart
-        cT('<3',i,j+20,C(R)):
+        H('<3',i,j+20,C(R)):
     // +score
-      (cT('+10',i,j,C(R)),e[1]-=1,e[0]+=V/2);
+      (H('+10',i,j,C(R)),e[1]-=1,e[0]+=V/2);
     //boost
-    H-18||cT('>>>>>>>>',i,j);
-    H-27||cR(i-4,j,w+8,H/2)
+    m-18||H('>>>>>>>>',i,j);
+    m-27||cR(i-4,j,w+8,m/2)
   };
   /*
   ui
@@ -94,28 +99,27 @@
   best
   
   */
-  $=z.getItem("$")-0;
-  // $=0;
+  
   s=j=>{
     // Z=1
     // do the Frame count, cycle characters if held after death screen animation
-    ++F*k*D<50||F%30||Z++;
+    ++F*k*D<50||F%30||P(++Z*M);
     Z%=Q<6?Q:6;
     // lerp player to starting position during death screen
     D*F>50?Y+=(M-Y)/9:0;
     // set the background color / clear canvas
     C(D?F>1?W+'3':'#f005':W);  
-    cR(0,0,1e3,450);
+    cR(0,0,n,n);
     //HUD
     C(B);
-    cT('tap:AIRSTOMP hold:CROUCH release:JUMP',X,20);
-    cT(l+'m',M,20);
+    H('tap:AIRSTOMP hold:CROUCH release:JUMP',X,20);
+    H(l+'m',M,20);
   
     // cR(20,420,660,2),
     // cR(20,420,L/48e3*660,20),
     // cR(M,81,($+f)/I*160,20),
     // cR(M,99,160,2),
-    // cT($+f,M,20);
+    // H($+f,M,20);
     // player is not grounded if v > 5
     g=g||v>5;
     //apply gravity
@@ -153,7 +157,7 @@
       p.push(a);
       //add a heart above the platform with probability (1-E-.1)
       //r()>E+.1&&p.push([x+r()*79,y-15-r()*120,20,30]);
-      r()>.1+E&&l([x+r()*79,y-15-r()*120,25,30]);
+      r()>2/(Q+4)+E&&l([x+r()*79,y-15-r()*120,25,30]);
     };
     // Z=3;
     // j=e=>Math.random()>.5?0:1;
@@ -185,52 +189,61 @@
   //set color based on character
     l=L>>4;
     C(R=["#d26","#73e","#2a7","#f2f","#dbc",'#0af'][Z]);
-    cT(f,M,50);
+    H(f+' <3s',M,50);
+    H(['Mindi', 'Geff', 'Frogi', 'Floati', 'Stompi', 'Speedi'][Z],10,50);
     // cR(20,20,660,2),
     // cR(20,20,($+f)/I*660,20),
-    cR(0,0,n*(.7-E),3);
+    cR(0,0,780*l/3e3,4);
+    S*t>l&&cR(S*16-L+220,0,3,n);
   //set hat/hair based on character
-    cT(['M','>FF',' " "','oöo','[█]','=>>'][Z],X-3-v/4,Y+10+h);
+    H(['M','>FF',' " "','oöo','[█]','=>>'][Z],X-3-v/4,Y+10+h);
   //draw character
     cR(X-v/4,Y+h,32+Z+v/2,30-h);
 
   //draw jump puffs
   //2-10 frames after jumping
-    F<10&&F>2&&cT(`Ɛ>${' '.repeat(F-2)}<3`,X-F*V,J);
+    F<10&&F>2&&H(`Ɛ>${' '.repeat(F-2)}<3`,X-F*V,J);
   //draw crown if this character has won
-    l<3e3||cT(' ♕',X,Y+h,C('#db0'));
+    l<3e3||H(' ♕',X,Y+h,C('#db0'));
   //remove the oldest platform if it is off screen
     p[0][0]<-p[0][2]&&p.shift();
   //draw face
       C(W);
     //select mouth based on character
       m="-w.vñ "[Z];
-      cT(k||d?`>${m}<`:`^${m}^`,X+V/2,Y+20+v+h/2);
+      H(k||d?`>${m}<`:`^${m}^`,X+V/2,Y+20+v+h/2);
 
 
     // u='*New Char Unlocked!';
-    // N&&$+f<30?cT(u,M,M):0;
+    // N&&$+f<30?H(u,M,M):0;
   //kill the player if they fall off screen
     Y>450&&(Y=420,K());
   //bound player to the ceiling
     Y<0?Y=0:0;
     // Y<0&&(Y=0,Z-1||K());
   // display death screen
+  
     D?
-      (m=260+999/F,C(B),cR(m-25,45,230,250),C(W),cR(m-20,50,220,240),C(B),
+      (m=260+999/F,C(B),cR(m-25,100,230,150),C(W),cR(m-20,50,220,240),C(B),
         d?N?
-        F%25>10&&cT(Q<7?'*New Char Unlocked!':'*Heart Rate Up!',m,M,C(R)):(
-          cT(`Best: ${S=l>S?l:S}m`,m,M),
-          cT(`${F*F<l?F*F:l}m`,m,150),
-          cT(`${f} <3s`,m+M,150)
+        F%25>10&&H(Q<7?'*New Boi Unlocked!':'<3 Rate Up!',m,M,C(R)):(
+          H((S=l>S?l:S)+'m Best',m,130),
+          H(l<3e3?'Reach 3km to win':'You Win!',m,200),
+          H(`${f} <3s`,m+M,M,C(R)),
+          cR(m-5,75,M,30),
+          H(`${F*F<l?F*F:l}m`,m,M,C(B))
         ):(
-          cT(`total: ${$} <3s`,m,80,C(R)),
-          cR(m,X,160,2),
-          f&&F%2?P($/I*n,$+=5,f-=5):0,
-          cR(m,X,$/I*160,20),
-          cT(`Next goal: ${I} <3s`,m,170)
+          // H(`total: ${$} <3s`,m,80,C(R)),
+          // u=f>>3,u=u>1?u:1,
+          u=f<5?f:(f>>5)+5,
+          // u=f>100?10:5,
+          f&&F%2?P($/I*n,$+=u,f-=u):0,
+          H(`${$} / ${I} <3s`,m,X,C(R)),
+          cR(m,150,160,2),
+          cR(m,150,$/I*160,20)
+          // H(`Next goal: ${I} <3s`,m,170)
         ),
-        Q-1&&cT('hold to change char',m,270),
+        Q-1&&H('hold to change boi',m,270),
       
       F%7||F>10&&F<44&&P(l>3e3||N?n+F*F:n-F*F)):
   //if alive and score > 3000, set this character to win
@@ -239,9 +252,11 @@
   // if money exceeds current goal, pay money to unlock character
   // and set new goal
     // $+f<I||Q>5?0:(Z=N=Q++,$-=I,K(),I*=2);
-    $<I||(d=F=Z=N=Q++,$-=I,I*=2);
+    $<I||K(N=Q++,Z=Q>6?Z:Q-1,$-=I,I*=2);
     // $+f<I||K($-=I,I*=2,Q<6?Z=N=Q++:N=1);
     window.requestAnimationFrame(s);
+    // a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z;
+    // A;B;C;D;E;F;G;H;I;J;K;L;M;N;O;P;Q;R;S;T;U;V;W;X;Y;Z;
   };
   /*
   Q +$
@@ -282,7 +297,7 @@
         //if dead, reset counter to do character cycle
         F<50||(F=60):
         //otherwise, crouch
-        P(550-Y,F=t=k=1,g?(v=10,Z-1||(V=8)):Z-5||(V+=5));
+        P(550-Y,F=t=k=1,g?(v=10,Z-1||(V=8)):Z-5||V++);
     k=1;
   };
   b=e=>{
@@ -291,12 +306,13 @@
       d*F>50?
         //Move to the next screen
         d=0:
-      F<50||F>M||f||($+=f,f=L=N=D=0,Y=M,E=.7*.99**Q):
+      F<50||F>M||f||($+=f,f=L=N=D=0,Y=M,E=.3+1/(Q+9)):
       k?g?
       // in the air
         Z-3?0:v=10:
       // on the ground
-        (
+        //play tone based on height
+        P(n-Y,
           //set puff location
           J=Y+20,
           //jump
@@ -306,9 +322,7 @@
           //add to score
           // f+=5*Q,
           //set airborn and frame counter
-          g=F=1,
-          //play tone based on height
-          P(n-Y)
+          g=F=1
         ):0;
   k=0;
   };

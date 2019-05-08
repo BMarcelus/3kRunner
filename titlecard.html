@@ -1,0 +1,85 @@
+
+<style>
+  body{
+    background: black;
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+  #title{
+    color: #d26;
+    font: italic 900 50px Arial;
+    text-shadow:  -4px 6px 0px #915;
+    margin: auto;
+    display: block;
+    text-align: center;
+  }
+  canvas {
+    position: absolute;
+  }
+</style>
+<h1 id="title">6 Unique </br>Unlockable</br> Characters</h1>
+<canvas></canvas>
+<script>
+var CE = document.querySelector('canvas');
+var c=CE.getContext('2d');
+CE.width = window.innerWidth;
+CE.height= window.innerHeight;
+// c.font='20px Arial';
+c.font="800 20px Arial";
+var frame = 0;
+try{A=webkitAudioContext}catch(e){A=AudioContext}A=new A();
+  P=(f,i,j)=>{
+    i=A.createOscillator();
+    j=A.currentTime;i.start();
+    i.stop(j+.07);
+    i.type="square";
+    i.frequency.setValueAtTime(f,j+.01);
+    f=A.createGain();
+    f.connect(A.destination);
+    f.gain.value=.03;i.connect(f);
+  };
+function drawChar(Z) {
+  c.save();
+  var a = Z*Math.PI/6*2 + frame*frame*Math.PI/90000;
+  var x = Math.sin(a)*300 + CE.width/2-20;
+  var y = -Math.cos(a)*200 + CE.height/2-50;
+  c.translate(x,y);
+  c.scale(2,2);
+    C=e=>{c.fillStyle=e};
+    H=c.fillText.bind(c);
+    cR=c.fillRect.bind(c);
+    X=0;
+    Y=0;
+    M=100;
+    v=0;
+    V=5;
+    h=0;
+    W="#000";
+    C(R=["#d26","#73e","#2a7","#f2f","#dbc",'#0af'][Z]);
+    H(['Mindi', 'Geff', 'Frogi', 'Floati', 'Stompi', 'Speedi'][Z],-10,50);
+  //set hat/hair based on character
+    H(['M','>FF',' " "','oöo','[█]','=>>'][Z],X-3-v/4,Y+10+h);
+  //draw character
+    cR(X-v/4,Y+h,32+Z+v/2,30-h);
+
+  //draw face
+      C(W);
+    //select mouth based on character
+      m="-w.vñ "[Z];
+      H(`^${m}^`,X+V/2,Y+20+v+h/2);
+  c.restore();
+}
+
+function step() {
+  c.clearRect(0,0,CE.width,CE.height);
+  var every= 80;
+  for(var i=0;i<6&&frame>i*every;i++) {
+    drawChar(i);
+  }
+  if(frame%every==20&&frame<6*every)P(400+i*100);
+  frame++;
+  window.requestAnimationFrame(step);
+}
+step();
+</script>
