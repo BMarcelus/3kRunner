@@ -23,6 +23,7 @@
       text-align: center;
       margin: auto;
       text-shadow:  -3px 4px 0px #914;
+      margin-left: 40%;
     }
     #asdf {
       margin-top: 10px;
@@ -44,7 +45,7 @@
   
 <div id="all">
   <h1 id="title">3k Runners</h1>
-<p>A Game By Brian Dizon</p><p id="asdf">Made in 3kb</p>
+<p>An infinite runner made in 3kb</p>
   </div>
 <canvas></canvas>
 <script>
@@ -66,13 +67,13 @@ try{A=webkitAudioContext}catch(e){A=AudioContext}A=new A();
     f.connect(A.destination);
     f.gain.value=.03;i.connect(f);
   };
-function drawChar(Z) {
+function drawChar(Z,x,y,z) {
   c.save();
-  var a = Z*Math.PI/6*2 + frame*frame*Math.PI/90000;
-  var x = 200;
-  var y = CE.height/2;
+  // var a = Z*Math.PI/6*2 + frame*frame*Math.PI/90000;
+  // var x = 200;
+  // var y = CE.height/2;
   c.translate(x,y);
-  c.scale(6,6);
+  c.scale(z,z);
   c.translate(0,-15);
     C=e=>{c.fillStyle=e};
     H=c.fillText.bind(c);
@@ -98,7 +99,13 @@ function drawChar(Z) {
       H(`^${m}^`,X+V/2,Y+20+v+h/2);
   c.restore();
 }
-var F = 0;
+drawChar(5, 20,450,1);
+drawChar(4, 60,450,1.5);
+drawChar(3, 120,450,2);
+drawChar(2, 200,450,2.5);
+drawChar(1, 300,450,3);
+drawChar(0, 200,300,4);
+// var F = 0;
 // setInterval(() => {
 //   F++;
 //   // if(F%100<80&&(F%15==0||F%45==10))P(880-((F*F)%7)*100);
