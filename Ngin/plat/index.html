@@ -1,0 +1,276 @@
+
+<style>
+body {
+  background: black;
+}
+canvas {
+  display: block;
+  background: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+}
+</style>
+<canvas></canvas>
+<script>
+W=800;
+H=600;
+C=document.querySelector('canvas');
+C.width=W;
+C.height=H;
+try{A=webkitAudioContext}catch(e){A=AudioContext}A=new A();
+P=f=>{
+  i=A.createOscillator();
+  j=A.currentTime;i.start();
+  i.stop(j+.07);
+  i.type=it;
+  i.frequency.setValueAtTime(f,j);
+  // i.frequency.setValueAtTime(f*2,j+.03);
+  f=A.createGain();
+  f.connect(A.destination);
+  f.gain.value=.03;
+  i.connect(f);
+};
+c=C.getContext('2d');
+c.strokeStyle="#fff";
+c.lineWidth=2;
+cT=(C,s,...i)=>c.fillText(...i,c.fillStyle=C,c.font='600 '+s+'px Arial',c.strokeText(...i));
+cR=(C,...i)=>c.fillRect(...i,c.fillStyle=C);
+c.scale(4,4);W/=4;H/=4;
+c.textAlign='center';
+l=window.addEventListener.bind(window);
+r=Math.random;
+k=[];
+K=(...i)=>i.reduce((a,v)=>k[v]||a,0);
+I=i=>k[i.keyCode];
+t=j=>i=>{k[i.keyCode]=j};l('keyup',t(0));
+l('keydown',i=>{i=i.keyCode;k[i]=k[i]||1});
+l('keyup',i=>k[i.keyCode]=0);
+F=J=Z=0;
+u=i=>{
+  F++;
+  it='triangle',
+  J>0?F%4||P(440+F%7*90+J,J--):0,
+  it='sawtooth',
+  kl=K(65,37),
+  kr=K(68,39),
+  ku=K(87,38),
+  kd=K(83,40),
+  ka=K(32),
+  kb=K(69),
+  Z>0?Z--:
+  E.map((a,i)=>E[i]=a.filter(o=>!o.D,a.map(S[i])),cR('#159',0,0,W,H),),
+  cR("#300",0,0,100,10);
+  cR("#f00",0,0,p.l*10,10);
+  k=k.map(v=>v?2:0),
+  p.D?s():0
+  // F%9||P(440+F%7*60);
+  // F%12||P(400+F%7*40);
+  // F%5||P(300-F*F%300);
+  // F%9||P(440+F%7*80);
+  // F%18||P(50);
+  // F%36-9||P(50);
+  // F%72-27||P(60);
+  // F%11||P(440*Math.pow(2,rad('024579')/12));
+  window.requestAnimationFrame(u);
+};
+
+
+
+R=(o,t)=>o.x+o.w>t.x&o.x<t.x+t.w&o.y+o.h>t.y&o.y<t.y+t.h;
+d=t=>{with(t){c.fillStyle=C;c.fillRect(x,y,w,h)}};
+s=i=>{
+  //ra(['^^','V','v','][','pp','o_o','m','}_{',';;;"','+|+','".."'])
+  ha='["]-';
+  hC='#000';
+  hc='#842';
+  // ha='..l^l..';
+  // hC='#999';
+  // ha='[T]';
+  // ha='LL';
+  // hC='#999';
+  ff=['^.^','owo','>o<','-.-'];
+  // bc=']v[';
+  bo=']v[';
+  // bc='*[]*';
+  // bc='"[]"';
+  bC='#000';
+  bc='#842';
+  fa=ff[0];
+  co=`hsl(${r()*136000>>0},80%,80%)`;
+  S=[
+    //0
+    d,
+    //1
+    t=>{
+      with(t) {
+        R(t,p)?a?0:P(880,T=p.B,a=p.B=B,B=T,F=J=10):a=0;
+        c.strokeStyle="#000";
+        cT(B[1],5,B[0],x,y+0,W,h/2);
+      }
+    },
+    //2
+    t=>{
+      with(t) {
+        kb-1?0:e({x:r()*W,y:H*.83,w:10,h:10,l:1,S:0,T:9}, [4,6]);
+        t.m=kd&&!a;
+        ka-1+a?0:P(200,a=B[4]+.5);
+        T=a|m?0:kr-kl;
+        a?a>-B[4]-4?a-=1:ka?0:a=0:0;
+        T?(F%9+g?0:P(100),f=T>0?1:-1):0;
+        a+.5?0:P(300,B[2](t));
+        V+=(T-V)/10;
+        kd-1?0:P(440,y+=4,v=2);
+        v+=.1;
+        //jump
+        g+ku-1?0:P(880,v=-3);
+        J>5?(v=0,V=0):0;(y+=v,x+=V);
+        g=9;
+        h=17-m*3;
+        E[0].map(o=>{
+          R(o,t)&y+h<o.y+o.h&&v>0&&(g=v=0,y=o.y-h);
+        });
+        y>H?t.D=1:0;
+        // cT(C,7,']v[',x+w/2,y+h/2+7-m,w,h/2);
+        // 'o==o'.split('').map((i,j)=>cT(C,5,i,x+j*(6*f-3)+(f&&w),y+12,w,h/2));
+        // cT(C,7,'^.^',x+w/2+V+f*2-1,y+7+v,w,h);
+
+        c.save();
+        c.translate(x+w/2,y+h);
+        f>0?0:c.scale(-1,1);
+        c.rotate(T=a>0?-.3:a<0?.3:g?v/9:T*Math.cos(F/3)/20);
+        // cR(C,-w/2,-h/2-m,w,8);
+        b='o';
+        c.strokeStyle=bc;
+        cT(C,4,b,1-T*7,v,w,h/2);
+        cT(bC,6,bo,0,-h/2+5-m,10,h/2);
+        cT(C,4,b,T*7-1,-v,w,h/2);
+        // 'p==>'.split('').map((i,j)=>cT(C,5,i,j*3,-3,w,h/2));
+        c.strokeStyle=hc;
+        cT(hC,6,ha,1,-h+1+v,100,h);
+        c.strokeStyle=C2;
+        cR(C2,1-w/2,-h+v,w,h/2);
+        cT(C,7,m?'^^':fa,3,-h+7+v,6,h);
+        c.translate(a?a>0?-5:11:0,a?a>0?-12:-6:-3);
+        c.rotate(a?a>0?-2:-T:0);
+        // c.rotate(-T);
+        // B=String.fromCharCode(55356+0,57088+F/10%200<<0);
+        c.strokeStyle=C;
+        cT(B[1],5,B[0],3,0,W,h/2);
+        c.restore();
+      }
+    },
+    //3
+    t=>{
+      with(t) {
+        Z?Z--:(
+        x+=V,
+        f?(x+p.V,y+=p.v):0,
+        E[J].map(o=>o!=p&&R(o,t)&&(
+          Z=2,
+          o.x+=V,
+          d--,
+          o.l--,
+          P(900-d*80),
+          e({x:x+w/2,y,V:0,v:-.1,l:5,C},[5]),
+          x-=V/2
+        )),
+        D=l--?d<=0:1
+        );
+        cT(C,20,'*',x+w/2,y+16,w,h);
+      }
+    },
+    //4
+    t=>{
+      t.T?t.T--:(t.S=(t.S+1)%3,t.T=100,
+    e({x:t.x,y:t.y-9,V:p.x>t.x?1:-1,l:20,w:10,h:10,C:"#f00",p:t,f:0,d:10,D:0,Z:0,J:2},[3])
+      );
+      t.x+=(t.S-1)/3;
+      t.D=t.l<=0;
+      c.fillStyle="#f00";
+      d(t);
+    },
+    //5
+    t=>{
+      with(t) {
+        l--?0:t.D=1;
+        x+=V;
+        y+=v;
+        cT(C,10,'*',x,y,10,10);
+      }
+    },
+    //6
+    t=>{
+      t.l?0:t.D=1;
+    },
+  ];
+  E=S.map(i=>[]);
+  e=(o,e)=>{e.map(i=>{E[i].push(o)})};
+  e(p={x:10,y:10,w:10,h:10,v:0,V:0,g:0,C:'#000',C2:co,f:0,a:0,B,fa,l:10},[2,6]);
+  e({x:0,y:H-10,w:W,h:20,C:'#abd'},[0]);
+  e({x:W/4,y:H-55,w:W/2,h:9,C:'#abd'},[0]);
+  e({x:W/2-10,y:H*.55,w:20,h:20,C:'#abd'},[0]);
+  e({x:W/2,y:H/2,w:10,h:10,B:ra(wp),a:0}, [1]);
+  e({x:W/2,y:H*.83,w:10,h:10,l:9,S:0,T:9}, [4,6]);
+};
+
+T=t=>{
+  console.log(9);
+  with(t) {
+    e({x,y:y+5,V:f*(4+l/9-B[4]/6),l:B[3]+2,w,h:w,C:B[1],p:t,f:B[3]<10,d:B[5],D:0,Z:0,J:4},[3]);
+  }
+};
+B=['o',"#000",T,3,8,1];
+wp=[
+  ['o|--',"#444",T,4,7,2],
+  ['o|_|','#777',T,5,10,3],
+  ['o|=>','#fff',T,5,7,4],
+  ['o||=>','#fff',T,6,8,5],
+  ['}','#a54',T,15,12,3],
+  ['o|==>','#fff',T,7,12,4],
+  ['--==o','#843',T,7,9,4],
+  ['---<_|','#ccc',T,9,14,6],
+  [',,','#ccc',T,3,4,3],
+  ['o|___|v|','#fe3',T,9,9,5],
+  ['o|vvv','#fff',T,7,9,4],
+  ['--<O','#35f',T,18,10,3],
+  ['o;"="',"#000",T,15,8,3],
+  ['o;="";"',"#000",T,15,1,2],
+  ['o:"',"#000",T,10,0,1],
+  ['o|-',"#fd0",T,1,0,3],
+  ['o=o==>',"#000",T,10,3,1],
+];
+//damage
+//speed
+//range
+ra=i=>i[r()*i.length>>0];
+// ey='^o*.u0O>6';
+// mo='_.vwm3o->';
+// ey=ra(ey);
+// fa=ey+ra(mo)+ey;
+s();
+u();
+
+//todos
+//make this into a roguelike
+// some sort of level world generation
+// powerups - emoji pickup that increases stats
+// equipable weapons
+// weapon stats and visuals
+// equipable armor, stats, visuals
+//
+//enemies
+// can attak
+// can be hit
+// can be killed
+// might drop money or something
+// some sort of ai 
+//  move toward player and attack or something
+//  maybe just a movement pattern
+// state machine?
+//
+
+</script>
